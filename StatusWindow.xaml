@@ -1,0 +1,50 @@
+﻿<Window x:Class="Ametatsu.StatusLightClient.StatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ametatsu.StatusLightClient"
+        mc:Ignorable="d"
+        Closing="StatusWindow_Closing"
+        Title="Status Light Client" Height="240" Width="600" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="Resources/icon.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Name="ActiveCategoryIconImage" Source="{Binding ActiveCategoryIcon}" Margin="6,6,6,6" HorizontalAlignment="Left" Grid.Column="0" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <StackPanel Margin="5,4,5,0" Grid.Column="1">
+                <TextBlock FontSize="10" RenderOptions.ClearTypeHint="Enabled" Foreground="Gray">Active Status</TextBlock>
+                <TextBlock Name="ActiveCategoryTextBlock" FontSize="13" RenderOptions.ClearTypeHint="Enabled" FontWeight="Bold"><Run Text="{Binding ActiveCategory}" /></TextBlock>
+            </StackPanel>
+            
+
+        </Grid>
+
+        <ListView Name="StatusListView" Grid.Row="1">
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    <Setter Property="Padding" Value="6 0" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Header="App Name" Width="180" DisplayMemberBinding="{Binding AppName}" />
+                    <GridViewColumn Header="Microphone Status" Width="136" DisplayMemberBinding="{Binding MicStatus}" />
+                    <GridViewColumn Header="Camera Status" Width="136" DisplayMemberBinding="{Binding CamStatus}" />
+                    <GridViewColumn Header="Category" Width="100" DisplayMemberBinding="{Binding Category}" />
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+
+    </Grid>
+
+</Window>

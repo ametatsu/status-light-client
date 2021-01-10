@@ -1,0 +1,11 @@
+﻿<Application x:Class="Ametatsu.StatusLightClient.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Ametatsu.StatusLightClient"
+             Startup="ApplicationStartup"
+             Exit="ExitApp"
+             ShutdownMode="OnExplicitShutdown">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

@@ -1,0 +1,45 @@
+
+# Ordered list of which priorities should take precedent over each other
+category_priority:
+- Streaming
+- Meeting
+- Gaming
+
+category_colors:
+  Streaming: purple
+  Meeting: red
+  Gaming: blue
+  Other: yellow
+
+# Define app categories. Non-mapped apps always go to "Other"
+# Apps are fuzzy matched (case-insensitive, and uses a 'contains' comparison)
+# Apps need to be a unique executable (i.e. cannot categorize chrome tab, or PWA)
+category_mapping:
+
+  # Streaming Apps
+  OBS64: Streaming
+  Xsplit: Streaming
+
+  # Meeting Clients
+  G2MComm: Meeting
+  Teams: Meeting
+  RingCentral: Meeting
+  RingCentralMeetings: Meeting
+  Webex: Meeting
+  atmgr: Meeting
+  ptoneclk: Meeting
+  ptsrv: Meeting
+  Zoom: Meeting
+
+  # Games
+  Steam: Gaming
+  Discord: Gaming
+  CSGO: Gaming
+  Overwatch: Gaming
+  TslGame: Gaming
+  RiotClientServices: Gaming
+
+# Ignore these apps when defining an active category
+ignored_apps:
+- NVIDIA RTX Voice
+- ptoneclk
