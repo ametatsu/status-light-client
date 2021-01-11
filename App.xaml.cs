@@ -15,7 +15,7 @@ namespace Ametatsu.StatusLightClient
     public partial class App : Application
     {
         private readonly CategoryConfig _categoryConfig;
-        
+
         private readonly Win10MicConsentService _micConsentService;
 
         private readonly Forms.NotifyIcon _trayIcon;
@@ -33,13 +33,16 @@ namespace Ametatsu.StatusLightClient
         public event EventHandler ActiveCategoryChanged;
         public event EventHandler StatusUpdated;
 
+        private HomeAssistantConfig _homeAssistantConfig;
+        private HomeAssistantService _homeAssistantService;
+
         public App()
         {
             var yamlDeserializer = new DeserializerBuilder()
                 .WithNamingConvention(UnderscoredNamingConvention.Instance)
                 .Build();
-            _categoryConfig =
-                yamlDeserializer.Deserialize<CategoryConfig>(System.IO.File.ReadAllText("category.config.yaml"));
+
+            _categoryConfig = yamlDeserializer.Deserialize<CategoryConfig>(System.IO.File.ReadAllText("category.config.yaml"));
 
             // Initialize variables
             _appStatuses = new List<AppStatus>();
@@ -71,6 +74,12 @@ namespace Ametatsu.StatusLightClient
                 _trayIcon.Icon = new System.Drawing.Icon(@$"Resources/icon{(!string.IsNullOrEmpty(_activeCategoryColor) ? "-" + _activeCategoryColor : null)}.ico");
                 _trayIcon.Text = $"Status Light Client\nActive Status: {_activeCategory}";
             };
+
+            // Initiate Home Assist
+            if (System.IO.File.Exists("homeassistant.config.yaml"))
+            {
+                InitializeHomeAssistantIntegration();
+            }
         }
 
         private void ApplicationStartup(object sender, StartupEventArgs e)
@@ -221,6 +230,30 @@ namespace Ametatsu.StatusLightClient
                 var onActiveCategoryChanged = ActiveCategoryChanged;
                 onActiveCategoryChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        private void InitializeHomeAssistantIntegration()
+        {
+            var yamlDeserializer = new DeserializerBuilder()
+                .WithNamingConvention(UnderscoredNamingConvention.Instance)
+                .Build();
+
+            _homeAssistantConfig = yamlDeserializer.Deserialize<HomeAssistantConfig>(System.IO.File.ReadAllText("homeassistant.config.yaml"));
+            _homeAssistantService = new HomeAssistantService(_homeAssistantConfig.BaseUrl, _homeAssistantConfig.AuthToken);
+
+            ActiveCategoryChanged += (s, e) =>
+            {
+                var haState = _activeCategory ?? "None";
+
+                if (_homeAssistantConfig.StatusEntity.StartsWith("input_select"))
+                {
+                    _homeAssistantService.UpdateInputSelectValue(_homeAssistantConfig.StatusEntity, haState);
+                }
+                else if (_homeAssistantConfig.StatusEntity.StartsWith("input_text"))
+                {
+                    _homeAssistantService.UpdateInputTextValue(_homeAssistantConfig.StatusEntity, haState);
+                }
+            };
         }
 
         public void ExitApp(object sender, EventArgs e)

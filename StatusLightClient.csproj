@@ -9,12 +9,12 @@
     <Authors>Yulong Yang</Authors>
     <Company>Ametatsu</Company>
     <Product>Status Light Client</Product>
-    <PackageIcon>Resources\icon.ico</PackageIcon>
     <PackageId>StatusLightClient</PackageId>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="YamlDotNet" Version="9.1.1" />
   </ItemGroup>
 
@@ -43,7 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="category.config.yaml">
+    <None Update="homeassistant.config.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="status.config.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
