@@ -14,11 +14,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="category.config.yaml" />
+    <None Remove="homeassistant.config.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="YamlDotNet" Version="9.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="category.config.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="homeassistant.config.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\icon-blue.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -43,8 +54,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="homeassistant.config.yaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Update="homeassistant.config.example.yaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="status.config.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
