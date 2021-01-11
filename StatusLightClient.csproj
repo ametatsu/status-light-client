@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <None Remove="category.config.yaml" />
+    <None Remove="homeassistant.config.example.yaml" />
     <None Remove="homeassistant.config.yaml" />
   </ItemGroup>
 
@@ -25,6 +26,9 @@
 
   <ItemGroup>
     <Content Include="category.config.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="homeassistant.config.example.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="homeassistant.config.yaml">
@@ -54,9 +58,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="homeassistant.config.example.yaml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
     <None Update="status.config.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
